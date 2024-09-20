@@ -56,12 +56,19 @@ class CodeCommitListCommits:
             "message": commit.message.decode("utf-8"),
         }
 
-    def list_commits(self, repository_name: str) -> list[dict[str, str | list[str]]]:
+    def list_commits(self, repository_name: str, branch_name: str | None = None) -> list[dict[str, str | list[str]]]:
         self.repository_name = repository_name
         try:
             self._clone_repository()
             repo = Repo(self.target_dir)
-            walker = Walker(repo, [repo.head()])
+            refs = repo.get_refs()
+            if branch_name:
+                branch_ref = f"refs/remotes/origin/{branch_name}".encode("utf-8")
+                if branch_ref not in refs:
+                    raise ValueError(f"Branch '{branch_name}' not found in the repository.")
+                walker = Walker(repo, [refs[branch_ref]])
+            else:
+                walker = Walker(repo, [repo.head()])
             commits_list = [self._extract_commit_details(entry.commit) for entry in walker]
         except Exception as e:
             raise RepositoryOpenError(f"Failed to open repository: {e}")
