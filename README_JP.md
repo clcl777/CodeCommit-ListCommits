@@ -1,3 +1,6 @@
+![Welcome PR](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![MIT license](https://img.shields.io/github/license/hermgerm29/qdbg?color=blue)
+
 # CodeCommit-ListCommits
 
 CodeCommit-ListCommitsは、Dulwichライブラリを使用してAWS CodeCommitリポジトリからコミット履歴を取得するためのPythonライブラリです。boto3ではリポジトリから全てのコミットを一括で取得することができませんが、このライブラリを使用すると、リポジトリをクローンして全てのコミット情報を一括で抽出でき、効率的にコミット履歴を分析することができます。

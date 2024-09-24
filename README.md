@@ -1,3 +1,6 @@
+![Welcome PR](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![MIT license](https://img.shields.io/github/license/hermgerm29/qdbg?color=blue)
+
 # CodeCommit-ListCommits
 
 日本語はこちら: [README_JP.md](https://github.com/clcl777/CodeCommit-ListCommits/blob/main/README_JP.md)
@@ -10,6 +13,12 @@ CodeCommit-ListCommits is a Python library designed to facilitate the retrieval 
 - **Branch-Specific Retrieval:** Retrieve commits from either the default or a specified branch.
 - **Secure Repository Cloning:** Clone AWS CodeCommit repositories securely using HTTPS credentials.
 - **Automatic Cleanup:** Automatically remove the cloned repository after the process completes, ensuring no leftover files.
+
+## Installation
+
+```bash
+pip install CodeCommitListCommits
+```
 
 ## Simple Demo
 
