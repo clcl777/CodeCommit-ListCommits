@@ -1,6 +1,6 @@
 [project]
 name = "CodeCommit-ListCommits"
-version = "1.0"
+version = "1.0.0"
 description = "Retrieve all commits from an AWS CodeCommit repository in bulk"
 readme = "README.md"
 license = {file = "LICENSE.txt"}
