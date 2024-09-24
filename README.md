@@ -1,6 +1,6 @@
 # CodeCommit-ListCommits
 
-日本語はこちら: [README_JP.md](README_JP.md)
+日本語はこちら: [README_JP.md](https://github.com/clcl777/CodeCommit-ListCommits/blob/main/README_JP.md)
 
 CodeCommit-ListCommits is a Python library designed to facilitate the retrieval of commit history from AWS CodeCommit repositories using the Dulwich library. Unlike boto3, which does not allow for the bulk retrieval of all commits from a repository, this library enables you to clone a repository and extract all commit information in bulk, making it easier to analyze commit histories efficiently.
 
