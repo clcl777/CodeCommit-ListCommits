@@ -1,3 +1,4 @@
+![pypl](https://img.shields.io/pypi/v/CodeCommit-ListCommits)
 ![Welcome PR](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 ![MIT license](https://img.shields.io/github/license/hermgerm29/qdbg?color=blue)
 
