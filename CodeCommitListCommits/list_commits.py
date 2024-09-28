@@ -2,18 +2,11 @@ import os
 import shutil
 import time
 
+from dulwich.errors import GitProtocolError, NotGitRepository
 from dulwich.objects import Commit
 from dulwich.porcelain import clone
 from dulwich.repo import Repo
 from dulwich.walk import Walker
-
-
-class RepositoryCloneError(Exception):
-    pass
-
-
-class RepositoryOpenError(Exception):
-    pass
 
 
 class CodeCommitListCommits:
@@ -30,8 +23,18 @@ class CodeCommitListCommits:
             shutil.rmtree(self.target_dir)
         try:
             clone(repo_url, target=self.target_dir, username=self.username, password=self.password)
+        except GitProtocolError as e:
+            if "403" in str(e):
+                print(f"Authentication error: Please check your username and password. \n{e}")
+            else:
+                print(f"Network error: Please check your network access. \n{e}")
+            raise
+        except NotGitRepository as e:
+            print(f"Repository not found: Please check the region and the repository name. \n{e}")
+            raise
         except Exception as e:
-            raise RepositoryCloneError(f"Failed to clone repository: {e}")
+            print(f"Failed to clone repository: {e}")
+            raise
 
     def _delete_repository(self) -> None:
         """Delete the cloned repository."""
@@ -58,8 +61,8 @@ class CodeCommitListCommits:
 
     def list_commits(self, repository_name: str, branch_name: str | None = None) -> list[dict[str, str | list[str]]]:
         self.repository_name = repository_name
+        self._clone_repository()
         try:
-            self._clone_repository()
             repo = Repo(self.target_dir)
             refs = repo.get_refs()
             if branch_name:
@@ -71,7 +74,8 @@ class CodeCommitListCommits:
                 walker = Walker(repo, [repo.head()])
             commits_list = [self._extract_commit_details(entry.commit) for entry in walker]
         except Exception as e:
-            raise RepositoryOpenError(f"Failed to open repository: {e}")
+            print(f"Failed to open repository: {e}")
+            raise
         finally:
             self._delete_repository()
         return commits_list
