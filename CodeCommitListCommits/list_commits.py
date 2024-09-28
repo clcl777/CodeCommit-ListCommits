@@ -9,6 +9,16 @@ from dulwich.repo import Repo
 from dulwich.walk import Walker
 
 
+class NullWriter:
+    """A class to suppress standard output and standard error."""
+
+    def write(self, s):
+        pass
+
+    def flush(self):
+        pass
+
+
 class CodeCommitListCommits:
     def __init__(self, username: str, password: str, region: str, target_dir: str = "./tmp"):
         self.username = username
@@ -22,7 +32,15 @@ class CodeCommitListCommits:
         if os.path.exists(self.target_dir):
             shutil.rmtree(self.target_dir)
         try:
-            clone(repo_url, target=self.target_dir, username=self.username, password=self.password)
+            null_writer = NullWriter()
+            clone(
+                repo_url,
+                target=self.target_dir,
+                username=self.username,
+                password=self.password,
+                outstream=null_writer,
+                errstream=null_writer,
+            )
         except GitProtocolError as e:
             if "403" in str(e):
                 print(f"Authentication error: Please check your username and password. \n{e}")
